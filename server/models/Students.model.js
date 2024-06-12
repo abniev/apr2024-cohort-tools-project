@@ -34,4 +34,3 @@ const Student = mongoose.model("Student", studentsSchema);
 
 module.exports = Student;
 
-//{type: Schema.Types.ObjectId, ref: "student"}
