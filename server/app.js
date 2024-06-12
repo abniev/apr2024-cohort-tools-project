@@ -2,11 +2,13 @@ const express = require("express");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const studentRouter = require("./routes/student.route.js");
+const cohortRouter = require("./routes/cohorts.route.js");
 const mongoose = require("mongoose");
 mongoose
-.connect("mongodb://127.0.0.1:27017/mongoose-example-dev")
-.then(x => console.log(`Connected to Database: "${x.connections[0].name}"`))
-  .catch(err => console.error("Error connecting to MongoDB", err));
+  .connect("mongodb://127.0.0.1:27017/cohort-tools-api")
+  .then((x) => console.log(`Connected to Database: "${x.connections[0].name}"`))
+  .catch((err) => console.error("Error connecting to MongoDB", err));
 
 const PORT = 5005;
 // app.use(cors({ origin: `http://127.0.0.1:${PORT}` }));
@@ -26,6 +28,8 @@ app.use(morgan("dev"));
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use("/students", studentRouter);
+app.use("/cohorts", cohortRouter);
 
 // ROUTES - https://expressjs.com/en/starter/basic-routing.html
 // Devs Team - Start working on the routes here:
@@ -41,17 +45,6 @@ app.get("/api/cohorts", (req, res) => {
 app.get("/api/students", (req, res) => {
   res.sendFile(__dirname + "/students.json");
 });
-
-
-
-
-
-
-
-
-
-
-
 
 // START SERVER
 app.listen(PORT, () => {
