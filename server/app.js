@@ -24,6 +24,11 @@ const app = express();
 // Research Team - Set up CORS middleware here:
 // ...
 app.use(express.json());
+app.use(
+  cors({
+    origin: ["http://localhost:8080", process.env.REACT_APP_URI],
+  })
+);
 app.use(morgan("dev"));
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
